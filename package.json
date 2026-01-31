@@ -1,8 +1,11 @@
 {
   "name": "@akdev1l/constructs",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "CDK Constructs",
   "private": false,
+  "files": [
+    "build/dist"
+  ],
   "exports": {
     ".": {
       "types": "./build/dist/index.d.ts",

@@ -7,7 +7,7 @@ const tsJestTransformCfg = createDefaultPreset({
 export default {
   testEnvironment: "node",
   extensionsToTreatAsEsm: [".ts"],
-  roots: ['<rootDir>/test'],
+  roots: ['<rootDir>/src'],
   moduleNameMapper: {
     '^@akdev1l/constructs$': '<rootDir>/src/index.ts'
   },

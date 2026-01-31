@@ -24,7 +24,7 @@ export class GithubAccessProvider extends Construct {
 
     const conditions: iam.Conditions = {
       StringLike: {
-        [`${GithubAccessProvider.GITHUB_DOMAIN}:sub`]: `repo:${props.repo}`,
+        [`${GithubAccessProvider.GITHUB_DOMAIN}:sub`]: [`repo:${props.repo}`],
       },
       StringEquals: {
         'token.actions.githubusercontent.com:iss': 'https://token.actions.githubusercontent.com',

@@ -3,6 +3,12 @@
   "version": "0.0.1",
   "description": "CDK Constructs",
   "private": false,
+  "exports": {
+    ".": {
+      "types": "./build/dist/index.d.ts",
+      "import": "./build/dist/index.js"
+    }
+  },
   "keywords": [
     "cdk",
     "construct"

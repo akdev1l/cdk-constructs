@@ -1,17 +1,12 @@
 {
   "name": "@akdev1l/constructs",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "CDK Constructs",
   "private": false,
   "files": [
     "build/dist"
   ],
-  "exports": {
-    ".": {
-      "types": "./build/dist/index.d.ts",
-      "import": "./build/dist/index.js"
-    }
-  },
+  "types": "build/dist/index.d.ts",
   "keywords": [
     "cdk",
     "construct"
@@ -27,7 +22,7 @@
   "license": "GPL-3.0",
   "author": "akdev1l",
   "type": "commonjs",
-  "main": "build/index.js",
+  "main": "build/dist/index.js",
   "scripts": {
     "prepublish": "npm run release",
     "release": "npm run build",

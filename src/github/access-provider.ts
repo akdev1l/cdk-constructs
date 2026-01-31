@@ -26,7 +26,7 @@ export class GithubAccessProvider extends Construct {
       StringLike: {
         [`${GithubAccessProvider.GITHUB_DOMAIN}:sub`]: `repo:${props.repo}`,
       },
-      ForAllValuesStringEquals: {
+      StringEquals: {
         'token.actions.githubusercontent.com:iss': 'https://token.actions.githubusercontent.com',
         'token.actions.githubusercontent.com:aud': 'sts.amazonaws.com',
       },

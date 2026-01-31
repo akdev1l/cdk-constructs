@@ -1,17 +1,23 @@
 import * as cdk from 'aws-cdk-lib';
-import * as s3 from 'aws-cdk-lib/aws-s3';
-import * as s3deploy from 'aws-cdk-lib/aws-s3-deployment';
-import * as cloudfront from 'aws-cdk-lib/aws-cloudfront';
+import {
+  aws_certificatemanager as acm,
+  aws_cloudfront as cloudfront,
+  aws_cloudfront_origins as cloudfront_origins,
+  aws_s3 as s3,
+  aws_s3_deployment as s3deploy,
+} from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 
 export interface SinglePageApplicationProps {
   package: string;
+  certificate: acm.Certificate;
+  domain: string;
 }
 
 export class SinglePageApplication extends Construct {
   readonly bucket: s3.Bucket;
   readonly deployment: s3deploy.BucketDeployment;
-  readonly cdn: cloudfront.CloudFrontWebDistribution;
+  readonly cdn: cloudfront.Distribution;
 
   constructor(scope: Construct, id: string, props: SinglePageApplicationProps) {
     super(scope, id);
@@ -34,20 +40,15 @@ export class SinglePageApplication extends Construct {
       comment: 'OAI for accessing the S3 bucket securely',
     });
     // Create a CloudFront distribution for CDN
-    this.cdn = new cloudfront.CloudFrontWebDistribution(this, 'ContentDeliveryNetwork', {
-      originConfigs: [
-        {
-          s3OriginSource: {
-            s3BucketSource: this.bucket,
-            originAccessIdentity: oai,
-          },
-          behaviors: [
-            {
-              isDefaultBehavior: true,
-            },
-          ],
-        },
-      ],
+    this.cdn = new cloudfront.Distribution(this, 'ContentDeliveryNetwork', {
+      defaultBehavior: {
+        origin: new cloudfront_origins.S3Origin(this.bucket, {
+          originAccessIdentity: oai,
+        }),
+        viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+      },
+      domainNames: [props.domain],
+      certificate: props.certificate,
     });
   }
 }

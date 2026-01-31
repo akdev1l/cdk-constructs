@@ -9,7 +9,7 @@ export interface GithubAccessProviderProps {
 }
 
 export class GithubAccessProvider extends Construct {
-  private static GITHUB_DOMAIN = 'https://token.actions.githubusercontent.com';
+  private static GITHUB_DOMAIN = 'token.actions.githubusercontent.com';
 
   readonly provider: iam.OpenIdConnectProvider;
   readonly role: iam.Role;
@@ -18,16 +18,15 @@ export class GithubAccessProvider extends Construct {
     super(scope, id);
 
     this.provider = new iam.OpenIdConnectProvider(this, 'GithubActionsProvider', {
-      url: GithubAccessProvider.GITHUB_DOMAIN,
+      url: `https://${GithubAccessProvider.GITHUB_DOMAIN}`,
       clientIds: ['sts.amazonaws.com'],
     });
 
     const conditions: iam.Conditions = {
       StringLike: {
-        [`${GithubAccessProvider.GITHUB_DOMAIN}:sub`]: [`repo:${props.repo}`],
+        [`${GithubAccessProvider.GITHUB_DOMAIN}:sub`]: `repo:${props.repo}`,
       },
       StringEquals: {
-        'token.actions.githubusercontent.com:iss': 'https://token.actions.githubusercontent.com',
         'token.actions.githubusercontent.com:aud': 'sts.amazonaws.com',
       },
     };
@@ -38,5 +37,6 @@ export class GithubAccessProvider extends Construct {
       description: `Access for deployment from repo ${props.repo}`,
       maxSessionDuration: Duration.hours(2),
     });
+    this.role.addManagedPolicy(iam.ManagedPolicy.fromAwsManagedPolicyName('AdministratorAccess'));
   }
 }

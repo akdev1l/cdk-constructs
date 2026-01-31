@@ -1,6 +1,6 @@
 {
   "name": "@akdev1l/constructs",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "CDK Constructs",
   "private": false,
   "files": [

@@ -1,6 +1,6 @@
 {
   "name": "@akdev1l/constructs",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "CDK Constructs",
   "private": false,
   "files": [
@@ -26,7 +26,7 @@
   },
   "license": "GPL-3.0",
   "author": "akdev1l",
-  "type": "module",
+  "type": "commonjs",
   "main": "build/index.js",
   "scripts": {
     "prepublish": "npm run release",

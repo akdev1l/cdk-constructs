@@ -2,6 +2,7 @@
   "name": "@akdev1l/constructs",
   "version": "0.0.1",
   "description": "CDK Constructs",
+  "private": false,
   "keywords": [
     "cdk",
     "construct"
